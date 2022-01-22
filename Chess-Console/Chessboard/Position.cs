@@ -7,6 +7,7 @@ namespace Chessboard
         public int Line { get; set; }
         public int Column { get; set; }
 
+        // Constructors
         public Position()
         {
         }
@@ -16,6 +17,7 @@ namespace Chessboard
             Column = column;
         }
 
+        // Print position
         public override string ToString()
         {
             return Line

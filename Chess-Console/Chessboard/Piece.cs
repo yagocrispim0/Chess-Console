@@ -10,13 +10,13 @@ namespace Chessboard
         public int MovementQuantity { get; protected set; }
         public Board Board { get; protected set; }
 
+        // Constructors
         public Piece()
         {
         }
-
-        public Piece(Position position, Color color, Board board)
+        public Piece(Color color, Board board)
         {
-            Position = position;
+            Position = null;
             Color = color;
             Board = board;
             MovementQuantity = 0;

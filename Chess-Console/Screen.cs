@@ -5,6 +5,8 @@ namespace Chess_Console
 {
     internal class Screen
     {
+
+        // Printing the board on the console.
         public static void WriteBoard(Board board)
         {
             for (int i = 0; i < board.Lines; i++)
