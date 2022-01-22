@@ -1,4 +1,5 @@
 ﻿using System;
+using Chessboard.Exceptions;
 
 namespace Chessboard
 {
@@ -31,11 +32,42 @@ namespace Chessboard
             return Pieces[pos.Line, pos.Column];
             
         }
+        // Checking if there is a piece in a specific position
+
+        public bool ExistsPiece(Position pos)
+        {
+            ValidatePosition(pos);
+            return piece(pos) != null;
+        }
+
 
         // Inserting pieces in each position of the board
         public void InsertPiece(Piece p, Position pos)
         {
+            if (ExistsPiece((pos)){
+                throw new ChessboardException("There a piece in this position already!");
+            }
             Pieces[pos.Line, pos.Column] = p;
+            p.Position = pos;
+        }
+
+        // Testing if position is valid
+
+        public bool ValidPosition(Position pos)
+        {
+            if (pos.Line < 0 || pos.Line > 7 || pos.Column < 0 || pos.Column > 7)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void ValidatePosition(Position pos)
+        {
+            if (!ValidPosition(pos))
+            {
+                throw new ChessboardException("Invalid position");
+            }
         }
     }
 }
