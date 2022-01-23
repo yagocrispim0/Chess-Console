@@ -44,9 +44,13 @@ namespace Chessboard
         // Inserting pieces in each position of the board
         public void InsertPiece(Piece p, Position pos)
         {
-            if (ExistsPiece((pos)){
+            if (ExistsPiece((pos)))
+            {
                 throw new ChessboardException("There a piece in this position already!");
             }
+             
+       
+
             Pieces[pos.Line, pos.Column] = p;
             p.Position = pos;
         }
