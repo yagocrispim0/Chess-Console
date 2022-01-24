@@ -27,7 +27,7 @@ namespace Chessboard
             return Pieces[line,column];
         }
 
-        public Piece piece(Position pos)
+        public Piece Piece(Position pos)
         {
             return Pieces[pos.Line, pos.Column];
             
@@ -37,7 +37,7 @@ namespace Chessboard
         public bool ExistsPiece(Position pos)
         {
             ValidatePosition(pos);
-            return piece(pos) != null;
+            return Piece(pos) != null;
         }
 
 
@@ -56,11 +56,11 @@ namespace Chessboard
 
         public Piece RemovePiece(Position pos)
         {
-            if(piece(pos) == null)
+            if(Piece(pos) == null)
             {
                 return null;
             }
-            Piece aux = piece(pos);
+            Piece aux = Piece(pos);
             aux.Position = null;
             Pieces[pos.Line, pos.Column] = null;
             return aux;
@@ -71,7 +71,7 @@ namespace Chessboard
 
         public bool ValidPosition(Position pos)
         {
-            if (pos.Line < 0 || pos.Line > 7 || pos.Column < 0 || pos.Column > 7)
+            if (pos.Line < 0 || pos.Line >= Lines || pos.Column < 0 || pos.Column >= Columns)
             {
                 return false;
             }

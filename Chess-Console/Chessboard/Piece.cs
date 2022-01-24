@@ -3,7 +3,7 @@
 
 namespace Chessboard
 {
-    internal class Piece
+    internal abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -14,7 +14,7 @@ namespace Chessboard
         public Piece()
         {
         }
-        public Piece(Color color, Board board)
+        public Piece(Board board, Color color)
         {
             Position = null;
             Color = color;
@@ -22,6 +22,9 @@ namespace Chessboard
             MovementQuantity = 0;
         }
 
+        public abstract bool[,] PossibleMovements();
+
+        // Increase and decrease the match's movemente quantity counter
         public void IncreaseMovement()
         {
             MovementQuantity++;
@@ -30,6 +33,12 @@ namespace Chessboard
         public void DecreaseMovement()
         {
             MovementQuantity--;
+        }
+
+        public virtual bool CanMove(Position pos)
+        {
+            Piece p = Board.Piece(pos);
+            return p == null || p.Color != Color;
         }
     }
 }

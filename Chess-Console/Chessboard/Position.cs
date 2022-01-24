@@ -24,5 +24,11 @@ namespace Chessboard
                 + ", "
                 + Column;
         }
+        // Change the values (Line and Column) of a given position
+        public void SetValue(int line, int column)
+        {
+            Line = line;
+            Column = column;
+        }
     }
 }

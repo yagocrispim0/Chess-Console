@@ -1,7 +1,6 @@
 ﻿using System;
-using Chess_Console.Chess;
-using Chessboard;
 using Chess;
+using Chessboard;
 
 namespace Chess
 {

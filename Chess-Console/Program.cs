@@ -14,10 +14,21 @@ try
         Console.Clear();
         Screen.WriteBoard(match.Board);
 
-        // User input and executing player's movement
+        // Origin movement
         Console.WriteLine();
         Console.Write("Origin: ");
         Position origin = Screen.ReadChessPosition().ToPosition();
+        bool[,] possiblePositions = match.Board.Piece(origin).PossibleMovements();
+
+        // Show possible positions
+        foreach (bool a in possiblePositions)
+        {
+            Console.WriteLine(a);
+        }
+        Console.Clear();
+        Screen.WriteBoard(match.Board, possiblePositions);
+
+        // Destination movement
         Console.Write("Destination: ");
         Position destination = Screen.ReadChessPosition().ToPosition();
         match.ExecuteMovement(origin, destination);
