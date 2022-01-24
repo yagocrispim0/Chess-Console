@@ -43,15 +43,15 @@ namespace Chess_Console
                         Console.BackgroundColor = originalBackground;
                     }
                     PrintPiece(board.Piece(i, j));
+                    Console.BackgroundColor = originalBackground;
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("  a b c d e f g h");
-            Console.BackgroundColor = originalBackground;
+            
         }
 
         // Reads a user input to set the position of the next movement. 
-
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
@@ -59,6 +59,7 @@ namespace Chess_Console
             int line = int.Parse(s[1] + "");
             return new ChessPosition(column, line);
         }
+        
         // Modify color of pieces. 
         public static void PrintPiece(Piece piece)
         {
