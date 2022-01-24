@@ -7,7 +7,8 @@ namespace Chess
         {
 
         }
-
+        
+        // Check all the possible movements of a king
         public override bool[,] PossibleMovements()
         {
             bool[,] movements = new bool[Board.Lines, Board.Columns];
