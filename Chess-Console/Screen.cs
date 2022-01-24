@@ -6,6 +6,14 @@ namespace Chess_Console
 {
     internal class Screen
     {
+        public static void WriteMatch(ChessMatch match)
+        {
+            WriteBoard(match.Board);
+            Console.WriteLine();
+            WriteCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turn: " + match.Turn + " | Current player: " + match.CurrentPlayer);
+        }
 
         // Printing the board on the console.
         public static void WriteBoard(Board board)
@@ -49,6 +57,28 @@ namespace Chess_Console
             }
             Console.WriteLine("  a b c d e f g h");
             
+        }
+
+        // Outputs the match status (captured pieces)
+        public static void WriteCapturedPieces(ChessMatch match)
+        {
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.WriteLine("Captured pieces:");
+            Console.Write("White: ");
+            PrintCollection(match.CapturedPieces(Color.White));
+            Console.Write("Black: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintCollection(match.CapturedPieces(Color.Black));
+            Console.ForegroundColor = aux;
+        }
+        public static void PrintCollection(HashSet<Piece> collection)
+        {
+            Console.Write("[ ");
+            foreach (Piece x in collection)
+            {
+                Console.Write(x + " ");
+            }
+            Console.WriteLine("]");
         }
 
         // Reads a user input to set the position of the next movement. 

@@ -14,11 +14,7 @@ try
         {
             // Showing the board
             Console.Clear();
-            Screen.WriteBoard(match.Board);
-
-            // Shows match information
-            Console.WriteLine();
-            Console.WriteLine("Turn: " + match.Turn + " | Current player: " + match.CurrentPlayer);
+            Screen.WriteMatch(match);
 
             // Origin movement
             Console.WriteLine();
