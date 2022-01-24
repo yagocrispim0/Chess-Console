@@ -1,5 +1,6 @@
 ﻿using System;
 using Chessboard;
+using Chess;
 
 namespace Chess_Console
 {
@@ -33,6 +34,15 @@ namespace Chess_Console
 
             }
 
+        // Reads a user input to set the position of the next movement. 
+
+        public static ChessPosition ReadChessPosition()
+        {
+            string s = Console.ReadLine();
+            char column = s[0];
+            int line = int.Parse(s[1] + "");
+            return new ChessPosition(column, line);
+        }
         // Modify color of pieces. 
         public static void PrintPiece(Piece piece)
         {
