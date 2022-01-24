@@ -16,7 +16,7 @@ namespace Chess
         }
 
         // This method coverts the matrix index position to a real Chess board position
-        public Position toPosition()
+        public Position ToPosition()
         {
             return new Position(8 - Line, Column - 'a');
         }

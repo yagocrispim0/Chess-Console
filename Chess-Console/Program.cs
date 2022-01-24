@@ -1,8 +1,17 @@
 ﻿using System;
 using Chess_Console;
 using Chessboard;
+using Chess;
+using Chessboard.Exceptions;
 
+try
+{
+    ChessMatch match = new ChessMatch();  
 
-Board board = new Board(8 ,8);
+    Screen.WriteBoard(match.Board);
 
-Screen.WriteBoard(board);
+}
+catch (ChessboardException e)
+{
+    Console.WriteLine(e.Message);
+}

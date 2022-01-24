@@ -1,5 +1,5 @@
 ﻿using Chessboard;
-namespace Chess_Console.Chess
+namespace Chess
 {
     internal class Tower : Piece
     {
