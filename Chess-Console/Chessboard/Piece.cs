@@ -60,7 +60,7 @@ namespace Chessboard
 
         // Check if a piece can move to a specific position
 
-        public virtual bool CanMoveTo(Position pos)
+        public virtual bool CanMoveTo(Position pos) // Renamed to "movimentoPossivel" in class.
         {
             return PossibleMovements()[pos.Line,pos.Column];
         }

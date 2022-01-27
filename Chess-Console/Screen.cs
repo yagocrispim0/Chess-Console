@@ -12,11 +12,32 @@ namespace Chess_Console
             Console.WriteLine();
             WriteCapturedPieces(match);
             Console.WriteLine();
-            Console.WriteLine("Turn: " + match.Turn + " | Current player: " + match.CurrentPlayer);
-            if (match.Check)
+            if (!match.Finished)
             {
-                Console.WriteLine("CHECK!");
+                Console.Write("Turn: " + match.Turn + " | Current player: ");
+                if (match.CurrentPlayer == Color.Black)
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(match.CurrentPlayer);
+                    Console.ForegroundColor = aux;
+                }
+                else
+                {
+                    Console.WriteLine(match.CurrentPlayer);
+                }
+
+                if (match.Check)
+                {
+                    Console.WriteLine("CHECK!");
+                }
             }
+            else
+            {
+                Console.WriteLine("CHECKMATE!");
+                Console.WriteLine(match.CurrentPlayer + " Wins!");
+            }
+           
         }
 
         // Printing the board on the console.

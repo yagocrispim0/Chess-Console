@@ -75,8 +75,16 @@ namespace Chess
             {
                 Check = false;
             }
-            Turn++;
-            SwitchPlayer();
+
+            if (IsCheckMate(Opponent(CurrentPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Turn++;
+                SwitchPlayer();
+            }
         }
 
         // Validates origin position
@@ -152,6 +160,34 @@ namespace Chess
             return false;
         }
 
+        // CHECKMATE!
+
+        public bool IsCheckMate(Color color)
+        {
+            foreach (Piece x in PiecesInGame(color))
+            {
+                bool[,] matrix = x.PossibleMovements();
+                for (int i = 0; i < Board.Lines; i++)
+                {
+                    for (int j = 0; j < Board.Columns; j++)
+                    {
+                        if (matrix[i, j])
+                        {
+                            Position origin = x.Position;
+                            Position destination = new Position(i, j);
+                            Piece capturedPiece = ExecuteMovement(origin, destination);
+                            bool checkTest = IsInCheck(color);
+                            UndoMovement(origin, destination, capturedPiece);
+                            if (!checkTest)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }  
+            }
+            return true;
+        }
         // Switches players
         private void SwitchPlayer()
         {
@@ -204,19 +240,41 @@ namespace Chess
         // Aux method to insert pieces
         private void PutPieces()
         {
-            InsertNewPiece('c', 1 , new Tower(Board, Color.White));
-            InsertNewPiece('c', 2, new Tower(Board, Color.White));
-            InsertNewPiece('d', 2, new Tower(Board, Color.White));
-            InsertNewPiece('e', 2, new Tower(Board, Color.White));
-            InsertNewPiece('e', 1, new Tower(Board, Color.White));
-            InsertNewPiece('d', 1, new King(Board, Color.White));
+            InsertNewPiece('a', 1, new Rook(Board, Color.White));
+            InsertNewPiece('b', 1, new Knight(Board, Color.White));
+            InsertNewPiece('c', 1, new Bishop(Board, Color.White));
+            InsertNewPiece('d', 1, new Queen(Board, Color.White));
+            InsertNewPiece('e', 1, new King(Board, Color.White));
+            InsertNewPiece('f', 1, new Bishop(Board, Color.White));
+            InsertNewPiece('g', 1, new Knight(Board, Color.White));
+            InsertNewPiece('h', 1, new Rook(Board, Color.White));
+            InsertNewPiece('a', 2, new Pawn(Board, Color.White));
+            InsertNewPiece('b', 2, new Pawn(Board, Color.White));
+            InsertNewPiece('c', 2, new Pawn(Board, Color.White));
+            InsertNewPiece('d', 2, new Pawn(Board, Color.White));
+            InsertNewPiece('e', 2, new Pawn(Board, Color.White));
+            InsertNewPiece('f', 2, new Pawn(Board, Color.White));
+            InsertNewPiece('g', 2, new Pawn(Board, Color.White));
+            InsertNewPiece('h', 2, new Pawn(Board, Color.White));
 
-            InsertNewPiece('c', 7, new Tower(Board, Color.Black));
-            InsertNewPiece('c', 8, new Tower(Board, Color.Black));
-            InsertNewPiece('d', 7, new Tower(Board, Color.Black));
-            InsertNewPiece('e', 7, new Tower(Board, Color.Black));
-            InsertNewPiece('e', 8, new Tower(Board, Color.Black));
-            InsertNewPiece('d', 8, new King(Board, Color.Black));
+
+
+            InsertNewPiece('a', 8, new Rook(Board, Color.Black));
+            InsertNewPiece('b', 8, new Knight(Board, Color.Black));
+            InsertNewPiece('c', 8, new Bishop(Board, Color.Black));
+            InsertNewPiece('d', 8, new Queen(Board, Color.Black));
+            InsertNewPiece('e', 8, new King(Board, Color.Black));
+            InsertNewPiece('f', 8, new Bishop(Board, Color.Black));
+            InsertNewPiece('g', 8, new Knight(Board, Color.Black));
+            InsertNewPiece('h', 8, new Rook(Board, Color.Black));
+            InsertNewPiece('a', 7, new Pawn(Board, Color.Black));
+            InsertNewPiece('b', 7, new Pawn(Board, Color.Black));
+            InsertNewPiece('c', 7, new Pawn(Board, Color.Black));
+            InsertNewPiece('d', 7, new Pawn(Board, Color.Black));
+            InsertNewPiece('e', 7, new Pawn(Board, Color.Black));
+            InsertNewPiece('f', 7, new Pawn(Board, Color.Black));
+            InsertNewPiece('g', 7, new Pawn(Board, Color.Black));
+            InsertNewPiece('h', 7, new Pawn(Board, Color.Black));
 
         }
     }
