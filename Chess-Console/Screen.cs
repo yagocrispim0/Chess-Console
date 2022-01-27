@@ -13,6 +13,10 @@ namespace Chess_Console
             WriteCapturedPieces(match);
             Console.WriteLine();
             Console.WriteLine("Turn: " + match.Turn + " | Current player: " + match.CurrentPlayer);
+            if (match.Check)
+            {
+                Console.WriteLine("CHECK!");
+            }
         }
 
         // Printing the board on the console.

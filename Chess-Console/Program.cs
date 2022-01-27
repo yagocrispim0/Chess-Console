@@ -6,8 +6,8 @@ using Chessboard.Exceptions;
 
 try
 {
-    ChessMatch match = new ChessMatch();  
-    
+    ChessMatch match = new ChessMatch();
+
     while (!match.Finished)
     {
         try
@@ -44,10 +44,6 @@ try
             Console.ReadLine();
         }
     }
-
-
-    
-
 }
 catch (ChessboardException e)
 {
