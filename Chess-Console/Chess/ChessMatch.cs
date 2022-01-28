@@ -149,13 +149,28 @@ namespace Chess
         // Perform a full play, including movement.
         public void PerformPlay(Position origin, Position destination)
         {
+            
             Piece capturedPiece = ExecuteMovement(origin, destination);
             if (IsInCheck(CurrentPlayer))
             {
                 UndoMovement(origin, destination, capturedPiece);
                 throw new ChessboardException("You can't move into check!");
             }
+            Piece p = Board.Piece(destination);
+            // Pawn promotion
+            if (p is Pawn)
+            {
+                if ((p.Color == Color.White && destination.Line == 0) || p.Color == Color.Black && destination.Line == 7)
+                {
+                    p = Board.RemovePiece(destination);
+                    PiecesCollection.Remove(p);
+                    Piece queen = new Queen(Board, p.Color);
+                    Board.InsertPiece(queen, destination);
+                    PiecesCollection.Add(queen);
+                }
+            }
 
+            // Testing Check
             if (IsInCheck(Opponent(CurrentPlayer)))
             {
                 Check = true;
@@ -176,7 +191,6 @@ namespace Chess
             }
 
             // EnPassant
-            Piece p = Board.Piece(destination);
 
             if (p is Pawn && (destination.Line == origin.Line - 2 || destination.Line == origin.Line + 2))
             {
