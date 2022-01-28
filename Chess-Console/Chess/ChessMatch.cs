@@ -85,8 +85,6 @@ namespace Chess
                     CapturedCollection.Add(capturedPiece);
                 }
             }
-
-
             return capturedPiece;
         }
 
@@ -305,7 +303,7 @@ namespace Chess
             return true;
         }
         // Switches players
-        private void SwitchPlayer()
+        public void SwitchPlayer()
         {
             if (CurrentPlayer == Color.White)
             {

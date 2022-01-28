@@ -45,7 +45,10 @@ namespace Chess_Console
         {
             for (int i = 0; i < board.Lines; i++)
             {
+                ConsoleColor auxColorOne = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.Write(8 - i + " ");
+                Console.ForegroundColor = auxColorOne;
                 for (int j = 0; j < board.Columns; j++)
                 {
                     PrintPiece(board.Piece(i, j));
@@ -53,7 +56,10 @@ namespace Chess_Console
 
                 Console.WriteLine();
             }
-            Console.WriteLine("  a b c d e f g h");
+            ConsoleColor auxColorTwo = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("  A B C D E F G H");
+            Console.ForegroundColor = auxColorTwo;
         }
 
         // Prints the board with possible movements after user's origin input.
@@ -64,7 +70,10 @@ namespace Chess_Console
 
             for (int i = 0; i < board.Lines; i++)
             {
+                ConsoleColor auxColorOne = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.Write(8 - i + " ");
+                Console.ForegroundColor = auxColorOne;
                 for (int j = 0; j < board.Columns; j++)
                 {
                     if (possiblePositions[i, j])
@@ -80,8 +89,11 @@ namespace Chess_Console
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("  a b c d e f g h");
-            
+            ConsoleColor auxColorTwo = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("  A B C D E F G H");
+            Console.ForegroundColor = auxColorTwo;
+
         }
 
         // Outputs the match status (captured pieces)
