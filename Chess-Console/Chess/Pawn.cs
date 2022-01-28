@@ -5,9 +5,10 @@ namespace Chess
 {
     internal class Pawn : Piece
     {
-        public Pawn(Board board, Color color) : base(board, color)
+        private ChessMatch Match;
+        public Pawn(Board board, Color color, ChessMatch match) : base(board, color)
         {
-
+            Match = match;
         }
 
         private bool IsThereOpponentPiece(Position pos)
@@ -58,6 +59,25 @@ namespace Chess
                 {
                     movements[auxpos.Line, auxpos.Column] = true;
                 }
+
+                // En Passant
+                if (Position.Line == 3)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(left) && IsThereOpponentPiece(left) && Board.Piece(left) == Match.VulnerableEnPassant)
+                    {
+                        movements[left.Line - 1, left.Column] = true;
+                    }
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(right) && IsThereOpponentPiece(right) && Board.Piece(right) == Match.VulnerableEnPassant)
+                    {
+                        movements[right.Line - 1, right.Column] = true;
+                    }
+
+
+                }
+
                 return movements;
             }
             else
@@ -89,22 +109,31 @@ namespace Chess
                 {
                     movements[auxpos.Line, auxpos.Column] = true;
                 }
+
+                // En passant
+
+                if (Position.Line == 4)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(left) && IsThereOpponentPiece(left) && Board.Piece(left) == Match.VulnerableEnPassant)
+                    {
+                        movements[left.Line + 1, left.Column] = true;
+                    }
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(right) && IsThereOpponentPiece(right) && Board.Piece(right) == Match.VulnerableEnPassant)
+                    {
+                        movements[right.Line + 1, right.Column] = true;
+                    }
+
+
+                }
+
+
                 return movements;
             }
         }
 
-
-        /*auxpos.SetValue(Position.Line + 1, Position.Column + 1);
-            while (Board.ValidPosition(auxpos) && CanMove(auxpos))
-            {
-                movements[auxpos.Line, auxpos.Column] = true;
-                if (Board.Piece(auxpos) != null && Board.Piece(auxpos).Color != Color)
-                {
-                    break;
-                }
-                auxpos.Line = auxpos.Line + 1;
-                auxpos.Column = auxpos.Column + 1;
-            }*/
 
         public override string ToString()
         {
