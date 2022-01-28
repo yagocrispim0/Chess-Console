@@ -41,6 +41,29 @@ namespace Chess
             {
                 CapturedCollection.Add(capturedPiece);
             }
+
+            // Castling short
+
+            if (p is King && destination.Column == origin.Column + 2)
+            {
+                Position rookOrigin = new Position(origin.Line, origin.Column + 3);
+                Position rookDestination = new Position(origin.Line, origin.Column + 1);
+                Piece r = Board.RemovePiece(rookOrigin);
+                r.IncreaseMovement();
+                Board.InsertPiece(r, rookDestination);
+            }
+
+            // Castling long
+            if (p is King && destination.Column == origin.Column - 2)
+            {
+                Position rookOrigin = new Position(origin.Line, origin.Column - 4);
+                Position rookDestination = new Position(origin.Line, origin.Column - 1);
+                Piece r = Board.RemovePiece(rookOrigin);
+                r.IncreaseMovement();
+                Board.InsertPiece(r, rookDestination);
+            }
+
+
             return capturedPiece;
         }
 
@@ -55,6 +78,28 @@ namespace Chess
                 CapturedCollection.Remove(capturedPiece);
             }
             Board.InsertPiece(p, origin);
+
+            // Castling short
+            if (p is King && destination.Column == origin.Column + 2)
+            {
+                Position rookOrigin = new Position(origin.Line, origin.Column + 3);
+                Position rookDestination = new Position(origin.Line, origin.Column + 1);
+                Piece r = Board.RemovePiece(rookDestination);
+                r.IncreaseMovement();
+                Board.InsertPiece(r, rookOrigin);
+            }
+
+            // Castling long
+            if (p is King && destination.Column == origin.Column - 2)
+            {
+                Position rookOrigin = new Position(origin.Line, origin.Column - 4);
+                Position rookDestination = new Position(origin.Line, origin.Column - 1);
+                Piece r = Board.RemovePiece(rookDestination);
+                r.IncreaseMovement();
+                Board.InsertPiece(r, rookOrigin);
+            }
+
+
         }
 
         // Perform a full play, including movement.
@@ -241,12 +286,12 @@ namespace Chess
         private void PutPieces()
         {
             InsertNewPiece('a', 1, new Rook(Board, Color.White));
-            InsertNewPiece('b', 1, new Knight(Board, Color.White));
-            InsertNewPiece('c', 1, new Bishop(Board, Color.White));
-            InsertNewPiece('d', 1, new Queen(Board, Color.White));
-            InsertNewPiece('e', 1, new King(Board, Color.White));
-            InsertNewPiece('f', 1, new Bishop(Board, Color.White));
-            InsertNewPiece('g', 1, new Knight(Board, Color.White));
+            //InsertNewPiece('b', 1, new Knight(Board, Color.White));
+            //InsertNewPiece('c', 1, new Bishop(Board, Color.White));
+            //InsertNewPiece('d', 1, new Queen(Board, Color.White));
+            InsertNewPiece('e', 1, new King(Board, Color.White, this));
+            //InsertNewPiece('f', 1, new Bishop(Board, Color.White));
+            //InsertNewPiece('g', 1, new Knight(Board, Color.White));
             InsertNewPiece('h', 1, new Rook(Board, Color.White));
             InsertNewPiece('a', 2, new Pawn(Board, Color.White));
             InsertNewPiece('b', 2, new Pawn(Board, Color.White));
@@ -260,12 +305,12 @@ namespace Chess
 
 
             InsertNewPiece('a', 8, new Rook(Board, Color.Black));
-            InsertNewPiece('b', 8, new Knight(Board, Color.Black));
-            InsertNewPiece('c', 8, new Bishop(Board, Color.Black));
-            InsertNewPiece('d', 8, new Queen(Board, Color.Black));
-            InsertNewPiece('e', 8, new King(Board, Color.Black));
-            InsertNewPiece('f', 8, new Bishop(Board, Color.Black));
-            InsertNewPiece('g', 8, new Knight(Board, Color.Black));
+            //InsertNewPiece('b', 8, new Knight(Board, Color.Black));
+            //InsertNewPiece('c', 8, new Bishop(Board, Color.Black));
+            //InsertNewPiece('d', 8, new Queen(Board, Color.Black));
+            InsertNewPiece('e', 8, new King(Board, Color.Black, this));
+            //InsertNewPiece('f', 8, new Bishop(Board, Color.Black));
+            //InsertNewPiece('g', 8, new Knight(Board, Color.Black));
             InsertNewPiece('h', 8, new Rook(Board, Color.Black));
             InsertNewPiece('a', 7, new Pawn(Board, Color.Black));
             InsertNewPiece('b', 7, new Pawn(Board, Color.Black));
