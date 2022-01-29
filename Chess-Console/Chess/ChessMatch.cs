@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Chess;
+using Chess.Exceptions;
 using Chessboard;
 using Chessboard.Exceptions;
+using Exceptions;
 
 namespace Chess
 {
@@ -147,7 +149,7 @@ namespace Chess
         // Perform a full play, including movement.
         public void PerformPlay(Position origin, Position destination)
         {
-            
+
             Piece capturedPiece = ExecuteMovement(origin, destination);
             if (IsInCheck(CurrentPlayer))
             {
@@ -160,11 +162,14 @@ namespace Chess
             {
                 if ((p.Color == Color.White && destination.Line == 0) || p.Color == Color.Black && destination.Line == 7)
                 {
+                    Char newPiece = InputNewPiece();
+
                     p = Board.RemovePiece(destination);
                     PiecesCollection.Remove(p);
-                    Piece queen = new Queen(Board, p.Color);
-                    Board.InsertPiece(queen, destination);
-                    PiecesCollection.Add(queen);
+                    PawnPromotion(p, newPiece);
+                    Piece piece = PawnPromotion(p, newPiece);
+                    Board.InsertPiece(piece, destination);
+                    PiecesCollection.Add(piece);
                 }
             }
 
@@ -198,7 +203,7 @@ namespace Chess
             {
                 VulnerableEnPassant = null;
             }
-           
+
         }
 
         // Validates origin position
@@ -243,7 +248,7 @@ namespace Chess
 
         // CHECK!
 
-        private Piece King (Color color)
+        private Piece King(Color color)
         {
             foreach (Piece x in PiecesInGame(color))
             {
@@ -298,9 +303,45 @@ namespace Chess
                             }
                         }
                     }
-                }  
+                }
             }
             return true;
+        }
+
+        // Pawn Promotion user input
+
+        private static char InputNewPiece()
+        {
+
+            Console.Write("What piece would you like? ");
+            char p = char.Parse(Console.ReadLine());
+            if (Char.IsUpper(p))
+            {
+                p = Char.ToLower(p);
+            }
+            return p;
+        }
+
+        private Piece PawnPromotion(Piece p, Char newPiece)
+        {
+            if (newPiece == 'q')
+            {
+                p = new Queen(Board, p.Color);
+            }
+            if (newPiece == 'n')
+            {
+                p = new Knight(Board, p.Color);
+            }
+            if (newPiece == 'b')
+            {
+                p = new Bishop(Board, p.Color);
+            }
+            if (newPiece == 'r')
+            {
+                p = new Rook(Board, p.Color);
+            }
+            return p;
+
         }
         // Switches players
         public void SwitchPlayer()
@@ -369,7 +410,7 @@ namespace Chess
             InsertNewPiece('e', 2, new Pawn(Board, Color.White, this));
             InsertNewPiece('f', 2, new Pawn(Board, Color.White, this));
             InsertNewPiece('g', 2, new Pawn(Board, Color.White, this));
-            InsertNewPiece('h', 2, new Pawn(Board, Color.White, this));
+            InsertNewPiece('h', 7, new Pawn(Board, Color.White, this));
 
 
 
@@ -388,7 +429,7 @@ namespace Chess
             InsertNewPiece('e', 7, new Pawn(Board, Color.Black, this));
             InsertNewPiece('f', 7, new Pawn(Board, Color.Black, this));
             InsertNewPiece('g', 7, new Pawn(Board, Color.Black, this));
-            InsertNewPiece('h', 7, new Pawn(Board, Color.Black, this));
+            //InsertNewPiece('h', 7, new Pawn(Board, Color.Black, this));
 
         }
     }

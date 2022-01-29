@@ -1,6 +1,7 @@
 ﻿using System;
 using Chessboard;
 using Chess;
+using Chess.Exceptions;
 
 namespace Chess_Console
 {
@@ -122,8 +123,31 @@ namespace Chess_Console
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
+            
+            if (s.Length > 2 || s.Length < 2)
+            {
+                throw new InputException("Invalid input");
+            }
+
+            if (!Char.IsLetter(s,0))
+            {
+                throw new InputException("The first digit must be a letter!");
+            }
+            
+            if (!Char.IsNumber(s, 1))
+            {
+                throw new InputException("The second digit must be a number!");
+            }
             char column = s[0];
             int line = int.Parse(s[1] + "");
+
+            if (Char.IsUpper(column))
+            {
+                column = Char.ToLower(column);
+            }
+
+
+
             return new ChessPosition(column, line);
         }
         

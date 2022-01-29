@@ -3,6 +3,7 @@ using Chess_Console;
 using Chessboard;
 using Chess;
 using Chessboard.Exceptions;
+using Chess.Exceptions;
 
 try
 {
@@ -19,22 +20,32 @@ try
             // Origin movement
             Console.WriteLine();
             Console.Write("Origin: ");
-            Position origin = Screen.ReadChessPosition().ToPosition();
-            match.ValidateOriginPosition(origin);
+            try
+            {
+                Position origin = Screen.ReadChessPosition().ToPosition();
+                match.ValidateOriginPosition(origin);
 
 
-            // Show possible positions
-            bool[,] possiblePositions = match.Board.Piece(origin).PossibleMovements();
-            Console.Clear();
-            Screen.WriteBoard(match.Board, possiblePositions);
+                // Show possible positions
+                bool[,] possiblePositions = match.Board.Piece(origin).PossibleMovements();
+                Console.Clear();
+                Screen.WriteBoard(match.Board, possiblePositions);
 
-            // Destination movement
-            Console.WriteLine();
-            Console.Write("Destination: ");
-            Position destination = Screen.ReadChessPosition().ToPosition();
-            match.ValidateDestinationPosition(origin, destination);
+                // Destination movement
+                Console.WriteLine();
+                Console.Write("Destination: ");
+                Position destination = Screen.ReadChessPosition().ToPosition();
+                match.ValidateDestinationPosition(origin, destination);
 
-            match.PerformPlay(origin, destination);
+                match.PerformPlay(origin, destination);
+            }
+            catch (InputException ie)
+            {
+                Console.WriteLine();
+                Console.WriteLine(ie.Message);
+                Console.WriteLine("Press 'ENTER' to continue");
+                Console.ReadLine();
+            }
         }
         catch (ChessboardException e)
         {
