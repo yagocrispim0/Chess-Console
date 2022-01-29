@@ -39,10 +39,10 @@ try
 
                 match.PerformPlay(origin, destination);
             }
-            catch (InputException ie)
+            catch (InputException e)
             {
                 Console.WriteLine();
-                Console.WriteLine(ie.Message);
+                Console.WriteLine(e.Message);
                 Console.WriteLine("Press 'ENTER' to continue");
                 Console.ReadLine();
             }

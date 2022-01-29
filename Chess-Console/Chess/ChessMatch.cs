@@ -4,7 +4,7 @@ using Chess;
 using Chess.Exceptions;
 using Chessboard;
 using Chessboard.Exceptions;
-using Exceptions;
+using Chess.Exceptions;
 
 namespace Chess
 {
@@ -162,14 +162,24 @@ namespace Chess
             {
                 if ((p.Color == Color.White && destination.Line == 0) || p.Color == Color.Black && destination.Line == 7)
                 {
-                    Char newPiece = InputNewPiece();
+                    try
+                    {
+                        Char newPiece = InputNewPiece();
 
-                    p = Board.RemovePiece(destination);
-                    PiecesCollection.Remove(p);
-                    PawnPromotion(p, newPiece);
-                    Piece piece = PawnPromotion(p, newPiece);
-                    Board.InsertPiece(piece, destination);
-                    PiecesCollection.Add(piece);
+                        p = Board.RemovePiece(destination);
+                        PiecesCollection.Remove(p);
+                        PawnPromotion(p, newPiece);
+                        Piece piece = PawnPromotion(p, newPiece);
+                        Board.InsertPiece(piece, destination);
+                        PiecesCollection.Add(piece);
+                    }catch (InputException e)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine("Press 'ENTER' to continue");
+                        Console.ReadLine();
+                        UndoMovement(origin, destination, capturedPiece);
+                    }
                 }
             }
 
@@ -314,10 +324,21 @@ namespace Chess
         {
 
             Console.Write("What piece would you like? ");
-            char p = char.Parse(Console.ReadLine());
+            string aux = Console.ReadLine();
+            if (aux.Length != 1)
+            {
+                throw new InputException("Invalid input.");
+            }
+            char p = char.Parse(aux);
+
             if (Char.IsUpper(p))
             {
                 p = Char.ToLower(p);
+            }
+
+            if (p != 'q' || p != 'n' || p != 'r' || p != 'b')
+            {
+                throw new InputException("Invalid piece.");
             }
             return p;
         }
@@ -410,7 +431,7 @@ namespace Chess
             InsertNewPiece('e', 2, new Pawn(Board, Color.White, this));
             InsertNewPiece('f', 2, new Pawn(Board, Color.White, this));
             InsertNewPiece('g', 2, new Pawn(Board, Color.White, this));
-            InsertNewPiece('h', 7, new Pawn(Board, Color.White, this));
+            InsertNewPiece('h', 2, new Pawn(Board, Color.White, this));
 
 
 
@@ -429,7 +450,7 @@ namespace Chess
             InsertNewPiece('e', 7, new Pawn(Board, Color.Black, this));
             InsertNewPiece('f', 7, new Pawn(Board, Color.Black, this));
             InsertNewPiece('g', 7, new Pawn(Board, Color.Black, this));
-            //InsertNewPiece('h', 7, new Pawn(Board, Color.Black, this));
+            InsertNewPiece('h', 7, new Pawn(Board, Color.Black, this));
 
         }
     }
